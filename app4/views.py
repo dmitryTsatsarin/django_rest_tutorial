@@ -27,3 +27,7 @@ class App4View(CreateModelMixin, UpdateModelMixin, GenericAPIView):
 
     def put(self, request, **kwargs):
         return self.update(request, **kwargs)
+
+
+    def get(self, request, **kwargs):
+        pass

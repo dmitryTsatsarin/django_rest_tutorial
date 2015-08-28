@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import UpdateModelMixin, CreateModelMixin
+from rest_framework.mixins import UpdateModelMixin, CreateModelMixin, ListModelMixin
 
-from serializers import ArtistSerializer
+from serializers import ArtistSerializer, ArtistListSerializer
 from main_app.models import Artist
 
 
 
-# Усложнение. Минимальное использование своего кода
+# Усложнение. POST и PUT Минимальное использование своего кода
+#             GET - использование сериализатора для выходных данных
 
-class App4View(CreateModelMixin, UpdateModelMixin, GenericAPIView):
+class App4View(CreateModelMixin, UpdateModelMixin, ListModelMixin, GenericAPIView):
     serializer_class = ArtistSerializer
     queryset = Artist.objects.filter()
 
@@ -30,4 +31,5 @@ class App4View(CreateModelMixin, UpdateModelMixin, GenericAPIView):
 
 
     def get(self, request, **kwargs):
-        pass
+        self.serializer_class = ArtistListSerializer
+        return self.list(request, **kwargs)

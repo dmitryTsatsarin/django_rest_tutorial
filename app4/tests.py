@@ -29,3 +29,14 @@ class App4TestCase(APITestCase):
         response = self.client.put('/api/app4/%s' % artist.pk, data=data_in, format='json')
         self.assertEqual(response.status_code, rest_status.HTTP_200_OK)
         print 'Database result is %s' % Artist.objects.values()
+
+    def test_ok_get_list(self):
+        factories.ArtistFactory.create(first_name='Vera', last_name='Prohorova', age=50)
+        factories.ArtistFactory.create(first_name='Miha', last_name='Arafat', age=20)
+        factories.ArtistFactory.create(first_name='some fellow', last_name='bla bla bla', age=25)
+
+        response = self.client.get('/api/app4/', {}, format='json')
+        self.assertEqual(response.status_code, rest_status.HTTP_200_OK)
+        print response.content
+
+
